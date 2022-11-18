@@ -27,7 +27,8 @@ class Mdl_Payments extends Response_Model
             ip_invoice_amounts.*,
             ip_clients.client_name,
             ip_clients.client_surname,
-        	  ip_clients.client_id,
+        	ip_clients.client_id,
+			ip_clients.client_tax_code,
             ip_invoices.invoice_number,
             ip_invoices.invoice_date_created,
             ip_payments.*", false);
@@ -35,7 +36,7 @@ class Mdl_Payments extends Response_Model
 
     public function default_order_by()
     {
-        $this->db->order_by('ip_payments.payment_date DESC');
+        $this->db->order_by('ip_payments.payment_date ASC');
     }
 
     public function default_join()

@@ -13,12 +13,12 @@
 
 <table>
     <tr>
-        <th><?php echo trans('date'); ?></th>
         <th><?php echo trans('invoice'); ?></th>
         <th><?php echo trans('client'); ?></th>
-        <th><?php echo trans('payment_method'); ?></th>
-        <th><?php echo trans('note'); ?></th>
-        <th class="amount"><?php echo trans('amount'); ?></th>
+		<th><?php echo trans('Codice Fiscale'); ?></th>
+        <th><?php echo trans('Pagamento'); ?></th>
+		<th class="amount"><?php echo trans('Totale fattura'); ?></th>
+        <th class="amount"><?php echo trans('Totale pagato'); ?></th>
     </tr>
     <?php
     $sum = 0;
@@ -26,11 +26,11 @@
     foreach ($results as $result) {
         ?>
         <tr>
-            <td><?php echo date_from_mysql($result->payment_date, true); ?></td>
-            <td><?php echo $result->invoice_number; ?></td>
+            <td><?php echo $result->invoice_number; ?> del <?php echo date_from_mysql($result->invoice_date_created, true); ?></td>
             <td><?php echo format_client($result); ?></td>
-            <td><?php _htmlsc($result->payment_method_name); ?></td>
-            <td><?php echo nl2br(htmlsc($result->payment_note)); ?></td>
+			<td>&ensp;<?php _htmlsc($result->client_tax_code); ?>&ensp;</td>
+            <td><?php _htmlsc($result->payment_method_name); ?> il <?php echo date_from_mysql($result->payment_date, true); ?></td>
+			<td class="amount"><?php echo format_currency($result->invoice_total);?></td>
             <td class="amount"><?php echo format_currency($result->payment_amount);
                 $sum = $sum + $result->payment_amount; ?></td>
         </tr>
@@ -39,9 +39,10 @@
 
     if (!empty($results)) {
         ?>
+		<tr></tr>
         <tr>
-            <td colspan=5><?php echo trans('total'); ?></td>
-            <td class="amount"><?php echo format_currency($sum); ?></td>
+            <td colspan=5><b><?php echo trans('total'); ?></b></td>
+            <td class="amount"><b><?php echo format_currency($sum); ?></b></td>
         </tr>
     <?php } ?>
 </table>
