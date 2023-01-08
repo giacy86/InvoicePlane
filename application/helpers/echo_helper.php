@@ -19,7 +19,9 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  */
 function htmlsc($output)
 {
-    return htmlspecialchars($output, ENT_QUOTES);
+    if(!is_null($output))
+    return htmlspecialchars($output, ENT_QUOTES | ENT_IGNORE);
+    return $output;
 }
 
 /**
@@ -31,7 +33,8 @@ function htmlsc($output)
  */
 function _htmlsc($output)
 {
-    echo htmlspecialchars($output, ENT_QUOTES);
+    if ($output==null) return '';
+    echo htmlspecialchars($output, ENT_QUOTES | ENT_IGNORE);
 }
 
 /**
@@ -43,7 +46,8 @@ function _htmlsc($output)
  */
 function _htmle($output)
 {
-    echo htmlentities($output);
+    if ($output==null) return '';
+    echo htmlentities($output, ENT_COMPAT);
 }
 
 /**

@@ -93,7 +93,7 @@ class ZugferdXml
      */
     function zugferdFormattedDate($date)
     {
-        if ($date && $date <> '0000-00-00') {
+        if ($date) {
             $date = DateTime::createFromFormat('Y-m-d', $date);
             return $date->format('Ymd');
         }
@@ -140,7 +140,7 @@ class ZugferdXml
     protected function xmlBuyerTradeParty($index = '', $item = '')
     {
         $node = $this->doc->createElement('ram:BuyerTradeParty');
-        $node->appendChild($this->doc->createElement('ram:Name', $this->invoice->client_name));
+        $node->appendChild($this->doc->createElement('ram:Name', htmlsc($this->invoice->client_name)));
 
         // PostalTradeAddress
         $addressNode = $this->doc->createElement('ram:PostalTradeAddress');

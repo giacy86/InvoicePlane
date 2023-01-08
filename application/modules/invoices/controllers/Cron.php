@@ -52,7 +52,9 @@ class Cron extends Base_Controller
                 'user_id' => $invoice->user_id,
                 'invoice_number' => $this->mdl_invoices->get_invoice_number($invoice->invoice_group_id),
                 'invoice_url_key' => $this->mdl_invoices->get_url_key(),
-                'invoice_terms' => $invoice->invoice_terms
+                'invoice_terms' => $invoice->invoice_terms,
+                'invoice_discount_amount' => $invoice->invoice_discount_amount,
+                'invoice_discount_percent' => $invoice->invoice_discount_percent
             );
 
             // This is the new invoice id
@@ -92,9 +94,9 @@ class Cron extends Base_Controller
                 // Prepare the body
                 $body = $tpl->email_template_body;
                 if (strlen($body) != strlen(strip_tags($body))) {
-                    $body = htmlspecialchars_decode($body);
+                    $body = htmlspecialchars_decode($body, ENT_COMPAT);
                 } else {
-                    $body = htmlspecialchars_decode(nl2br($body));
+                    $body = htmlspecialchars_decode(nl2br($body), ENT_COMPAT);
                 }
 
                 $from = !empty($tpl->email_template_from_email) ?
